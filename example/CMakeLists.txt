@@ -16,7 +16,7 @@ add_compile_options(-DASIO_HAS_STD_CHRONO)
 
 SET(EXAMPLE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-LINK_LIBRARIES("/mnt/hgfs/share/innfos-gluon-cpp-sdk/sca_sdk/lib/linux_x86_64/libActuatorController.so")
+LINK_LIBRARIES("${CMAKE_CURRENT_SOURCE_DIR}/../sca_sdk/lib/linux_x86_64/libActuatorController.so")
 
 
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/basic)
