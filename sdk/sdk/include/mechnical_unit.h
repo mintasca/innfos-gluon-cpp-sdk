@@ -2,7 +2,7 @@
 #define MECHNICAL_UNIT_H
 
 /**
- * @file robot_interface.h
+ * @file mechnical_unit.h
  * @brief
  * @mainpage Innfos Gluon API Instructions
  * @author innfos
@@ -12,14 +12,11 @@
  * @update 2019-12-03
  * @license 
  * @note
- * @warning
- * @todo
  * @history:
  */
 
 
 #include "base.h"
-#include <vector>
 #include "actuatorcontroller.h"
 
 /**
@@ -145,9 +142,11 @@ public:
 	 * @brief 关闭机械臂，在断电之前请务必执行此函数
 	 * @detail 失能执行器
 	 * 
+	 * @return 返回说明
+	 *	 @retval 0	 执行成功
+	 *	 @retval 非0 执行失败
 	 */
-
-	void Shutdown();
+	int Shutdown();
 
 	/**
 	 * @brief 设置机械臂最大关节速度
@@ -286,9 +285,9 @@ public:
 	/**
 	 * @brief 获取机械臂当前的位姿
 	 * 
-	 * @param pose 需要获取的值,默认为RPY型式
+	 * @param pose 需要获取的值,前三维为位置单位毫米，后四维为姿态,表述方式为单位四元数
 	 */
-	void GetCurrentPoseRPY(double pose[6]);
+	void GetCurrentPose(double pose[7]);
 
 	/**
 	 * @brief 获取机械臂的轴数
@@ -297,6 +296,14 @@ public:
 	 *	 @retval 机械臂的轴数
 	 */
 	int GetAxisNum();
+
+	/**
+	 * @brief 将当前点设置为机械零点
+	 * 
+	 */
+	void SetHomingPosition();
+
+
 
 	int GetRobotType();
 	void GetCurrentCVPFast(double current[],double vel[],double pos[]);
@@ -315,7 +322,6 @@ public:
 	void RequestCVPValue();
 	int SetPosition(double joint[],double *last_joint=NULL,bool check=false);
 	int SetTorque(double tau[]);
-	int SetHomingPosition();
 	int SetLimitData(double min_pos[],double max_pos[]);	
 	int SetLockEnergy(double energy[]);
 	int SetPositionPidData(double kp[],double ki[],double kd[]);
@@ -332,7 +338,17 @@ public:
 
 };
 
-void DisableAllActuatorGroup();
+
+/**
+ * @brief 关闭所有机械臂，多机情况下使用
+ * @detail 失能执行器
+ * 
+ * @return 返回说明
+ *	 @retval 0	 执行成功
+ *	 @retval 非0 执行失败
+
+ */
+int ShutDownAllActuatorGroup();
 
 
 #endif
